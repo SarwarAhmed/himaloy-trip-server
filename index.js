@@ -52,6 +52,11 @@ async function run() {
             res.send(spost);
         });
 
+        app.get('/myList', async (req, res) => {
+            const query = req.query;
+            const result = await spostCollection.find(query).toArray();
+            res.send(result);
+        })
 
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
