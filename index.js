@@ -57,6 +57,38 @@ async function run() {
             const result = await spostCollection.find(query).toArray();
             res.send(result);
         })
+        // edit spot
+        app.get('/editSpot/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const spost = await spostCollection.findOne(query);
+            res.send(spost);
+        });
+
+        app.put('/updateSpot/:id', async (req, res) => {
+            const id = req.params.id;
+            const updatedSpot = req.body;
+            const filter = { _id: new ObjectId(id) };
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: {
+                    image: updatedSpot.image,
+                    touristSpotName: updatedSpot.touristSpotName,
+                    country: updatedSpot.country,
+                    location: updatedSpot.location,
+                    shortDescription: updatedSpot.shortDescription,
+                    cost: updatedSpot.cost,
+                    seasonality: updatedSpot.seasonality,
+                    travelTime: updatedSpot.travelTime,
+                    totalVisitorsPerYear: updatedSpot.totalVisitorsPerYear,
+                    username: updatedSpot.username,
+                    email: updatedSpot.email
+
+                },
+            };
+            const result = await spostCollection.updateOne(filter, updateDoc, options);
+            res.send(result);
+        });
 
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
