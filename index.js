@@ -30,6 +30,7 @@ async function run() {
         await client.connect();
 
         const spostCollection = client.db("cspostDB").collection("cspost");
+        const usersCollection = client.db("cspostDB").collection("users");
 
         app.post('/touristSpot', async (req, res) => {
             const spost = req.body;
@@ -87,6 +88,15 @@ async function run() {
                 },
             };
             const result = await spostCollection.updateOne(filter, updateDoc, options);
+            res.send(result);
+        });
+
+        // Users
+        app.post('/addUser', async (req, res) => {
+            const user = req.body;
+            console.log(user);
+            const result = await usersCollection.insertOne(user);
+            console.log('user added', result);
             res.send(result);
         });
 
