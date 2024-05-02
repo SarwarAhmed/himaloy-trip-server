@@ -91,6 +91,16 @@ async function run() {
             res.send(result);
         });
 
+
+        // delete spot
+        app.delete('/deleteSpot/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await spostCollection.deleteOne(query);
+            res.send(result);
+        });
+       
+
         // Users
         app.post('/addUser', async (req, res) => {
             const user = req.body;
