@@ -27,7 +27,7 @@ const client = new MongoClient(uri, {
 async function run() {
     try {
         // Connect the client to the server	(optional starting in v4.7)
-        await client.connect();
+        // await client.connect();
 
         const spostCollection = client.db("cspostDB").collection("cspost");
         const usersCollection = client.db("cspostDB").collection("users");
@@ -99,7 +99,7 @@ async function run() {
             const result = await spostCollection.deleteOne(query);
             res.send(result);
         });
-       
+
 
         // Users
         app.post('/addUser', async (req, res) => {
@@ -122,7 +122,7 @@ run().catch(console.dir);
 
 
 app.get('/', (req, res) => {
-    res.send(`Himaloy trip is running ${port}`);
+    res.send(`Himaloy trip is running`);
 });
 
 app.listen(port, () => {
